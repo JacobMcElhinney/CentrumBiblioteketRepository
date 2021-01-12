@@ -13,12 +13,18 @@ namespace CentrumBiblioteket.Models
 
 
         [Required]
+        public int LibraryCardId { get; set; }
+        public LibraryCard LibraryCard { get; set; }
+
+        [Required]
+        public int BookEditionId { get; set; }
+        public BookEdition BookEdition { get; set; }
+
+
+        [Required]
         public int BookCopyId { get; set; }
         public BookCopy BookCopy { get; set; }
 
-        [Required]
-        public int LibraryCardId { get; set; }
-        public LibraryCard LibraryCard { get; set; }
 
         //'LoanDate' Automatically set in controller. No user input required.
         public DateTime LoanDate { get; set; }
