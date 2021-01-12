@@ -16,6 +16,10 @@ namespace CentrumBiblioteket.Models
         public int LibraryCardId { get; set; }
         public LibraryCard LibraryCard { get; set; }
 
+        [Required]
+        public int BookEditionId { get; set; }
+        public BookEdition BookEdition { get; set; }
+
 
         [Required]
         public int BookCopyId { get; set; }
