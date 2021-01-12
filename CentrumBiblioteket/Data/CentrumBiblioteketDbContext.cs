@@ -15,6 +15,7 @@ namespace CentrumBiblioteket.Data
         {
         }
 
+
         public DbSet<Author> Authors { get; set; }
         public DbSet<BookEdition> BookEditions { get; set; }
         public DbSet<BookEdition_Author> BookEdition_Authors { get; set; }
