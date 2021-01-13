@@ -4,14 +4,16 @@ using CentrumBiblioteket.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CentrumBiblioteket.Migrations
 {
     [DbContext(typeof(CentrumBiblioteketDbContext))]
-    partial class CentrumBiblioteketDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210113131409_LibraryCard.PhoneNumber.ToString")]
+    partial class LibraryCardPhoneNumberToString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

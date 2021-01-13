@@ -19,7 +19,7 @@ namespace CentrumBiblioteket.Models
 
         //Version 1.1: Added Customer Phone number.
         [Required]
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         public virtual ICollection<BookLoan> BookLoans { get; set; }
     }
