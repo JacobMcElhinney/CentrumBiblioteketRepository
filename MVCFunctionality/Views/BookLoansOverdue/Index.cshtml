@@ -16,7 +16,7 @@
                 @Html.DisplayNameFor(model => model.BookLoanId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BookEdition.BookTitle)
+                @Html.DisplayNameFor(model => model.BookCopy.BookEdition.BookTitle)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.LibraryCard.FirstName)
@@ -30,47 +30,44 @@
             <th>
                 @Html.DisplayNameFor(model => model.LoanDate)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReturnDate)
-            </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.BookLoanId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BookEdition.BookTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LibraryCard.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LibraryCard.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LibraryCard.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BookCopy.Available)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LoanDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReturnDate)
-            </td>
-            <td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookLoanId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookCopy.BookEdition.BookTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LibraryCard.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LibraryCard.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LibraryCard.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookCopy.Available)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LoanDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReturnDate)
+                </td>
+                <td>
                     <!--
                         <a asp-action="Edit" asp-route-id="@item.BookLoanId">Edit</a> |
                         <a asp-action="Details" asp-route-id="@item.BookLoanId">Details</a> |
                         <a asp-action="Delete" asp-route-id="@item.BookLoanId">Delete</a>
                     -->
-            </td>
-        </tr>
-}
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

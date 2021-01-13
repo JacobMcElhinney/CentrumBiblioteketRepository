@@ -28,8 +28,8 @@ namespace CentrumBiblioteket.Models
         //One BookEdition may have many BookCopies.
         public virtual ICollection<BookCopy> BookCopies { get; set; }
 
-        //One-to-many: One BookEdition may be registered many times in the BookLoans table.
-        public virtual ICollection<BookLoan> BookLoans { get; set; }
+        ////One-to-many: One BookEdition may be registered many times in the BookLoans table.
+        //public virtual ICollection<BookLoan> BookLoans { get; set; }
 
     }
 }

@@ -10,28 +10,27 @@ using CentrumBiblioteket.Models;
 
 namespace MVCFunctionality.Controllers
 {
-    public class BookLoansController : Controller
+    public class BookLoansOverdueController : Controller
     {
         private readonly CentrumBiblioteketDbContext _context;
 
-        public BookLoansController(CentrumBiblioteketDbContext context)
+        public BookLoansOverdueController(CentrumBiblioteketDbContext context)
         {
             _context = context;
         }
 
-        // GET: BookLoans
+        // GET: BookLoansOverdue
         public async Task<IActionResult> Index()
         {
-           
-
+            //BookLoans are Overdue +30 days past LoanDate. The 'Where(Expression)' filters out BookLoans that are not overdue as of 'DateTime.Now.
             var centrumBiblioteketDbContext = _context.BookLoans.Where(bl => bl.LoanDate.AddDays(30) < DateTime.Now)
                 .Include(b => b.BookCopy)
-                .Include(b => b.BookEdition)
+                .ThenInclude(b => b.BookEdition)
                 .Include(b => b.LibraryCard);
             return View(await centrumBiblioteketDbContext.ToListAsync());
         }
 
-        // GET: BookLoans/Details/5
+        // GET: BookLoansOverdue/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -41,7 +40,6 @@ namespace MVCFunctionality.Controllers
 
             var bookLoan = await _context.BookLoans
                 .Include(b => b.BookCopy)
-                .Include(b => b.BookEdition)
                 .Include(b => b.LibraryCard)
                 .FirstOrDefaultAsync(m => m.BookLoanId == id);
             if (bookLoan == null)
@@ -52,21 +50,20 @@ namespace MVCFunctionality.Controllers
             return View(bookLoan);
         }
 
-        // GET: BookLoans/Create
+        // GET: BookLoansOverdue/Create
         public IActionResult Create()
         {
             ViewData["BookCopyId"] = new SelectList(_context.BookCopies, "BookCopyId", "Available");
-            ViewData["BookEditionId"] = new SelectList(_context.BookEditions, "BookEditionId", "BookTitle");
             ViewData["LibraryCardId"] = new SelectList(_context.LibraryCards, "LibraryCardId", "FirstName");
             return View();
         }
 
-        // POST: BookLoans/Create
+        // POST: BookLoansOverdue/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BookLoanId,LibraryCardId,BookEditionId,BookCopyId,LoanDate,ReturnDate")] BookLoan bookLoan)
+        public async Task<IActionResult> Create([Bind("BookLoanId,LibraryCardId,BookCopyId,LoanDate,ReturnDate")] BookLoan bookLoan)
         {
             if (ModelState.IsValid)
             {
@@ -75,12 +72,11 @@ namespace MVCFunctionality.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["BookCopyId"] = new SelectList(_context.BookCopies, "BookCopyId", "Available", bookLoan.BookCopyId);
-            ViewData["BookEditionId"] = new SelectList(_context.BookEditions, "BookEditionId", "BookTitle", bookLoan.BookEditionId);
             ViewData["LibraryCardId"] = new SelectList(_context.LibraryCards, "LibraryCardId", "FirstName", bookLoan.LibraryCardId);
             return View(bookLoan);
         }
 
-        // GET: BookLoans/Edit/5
+        // GET: BookLoansOverdue/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -94,17 +90,16 @@ namespace MVCFunctionality.Controllers
                 return NotFound();
             }
             ViewData["BookCopyId"] = new SelectList(_context.BookCopies, "BookCopyId", "Available", bookLoan.BookCopyId);
-            ViewData["BookEditionId"] = new SelectList(_context.BookEditions, "BookEditionId", "BookTitle", bookLoan.BookEditionId);
             ViewData["LibraryCardId"] = new SelectList(_context.LibraryCards, "LibraryCardId", "FirstName", bookLoan.LibraryCardId);
             return View(bookLoan);
         }
 
-        // POST: BookLoans/Edit/5
+        // POST: BookLoansOverdue/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BookLoanId,LibraryCardId,BookEditionId,BookCopyId,LoanDate,ReturnDate")] BookLoan bookLoan)
+        public async Task<IActionResult> Edit(int id, [Bind("BookLoanId,LibraryCardId,BookCopyId,LoanDate,ReturnDate")] BookLoan bookLoan)
         {
             if (id != bookLoan.BookLoanId)
             {
@@ -132,12 +127,11 @@ namespace MVCFunctionality.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["BookCopyId"] = new SelectList(_context.BookCopies, "BookCopyId", "Available", bookLoan.BookCopyId);
-            ViewData["BookEditionId"] = new SelectList(_context.BookEditions, "BookEditionId", "BookTitle", bookLoan.BookEditionId);
             ViewData["LibraryCardId"] = new SelectList(_context.LibraryCards, "LibraryCardId", "FirstName", bookLoan.LibraryCardId);
             return View(bookLoan);
         }
 
-        // GET: BookLoans/Delete/5
+        // GET: BookLoansOverdue/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -147,7 +141,6 @@ namespace MVCFunctionality.Controllers
 
             var bookLoan = await _context.BookLoans
                 .Include(b => b.BookCopy)
-                .Include(b => b.BookEdition)
                 .Include(b => b.LibraryCard)
                 .FirstOrDefaultAsync(m => m.BookLoanId == id);
             if (bookLoan == null)
@@ -158,7 +151,7 @@ namespace MVCFunctionality.Controllers
             return View(bookLoan);
         }
 
-        // POST: BookLoans/Delete/5
+        // POST: BookLoansOverdue/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
