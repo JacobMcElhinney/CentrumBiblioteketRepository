@@ -58,7 +58,7 @@ namespace MVCFunctionality
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=BookLoansOverdueController}/{action=Index}/{id?}");
+                    pattern: "{controller=BookLoansController}/{action=Index}/{id?}");
             });
         }
     }

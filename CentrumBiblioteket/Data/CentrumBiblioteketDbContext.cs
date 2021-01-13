@@ -22,7 +22,7 @@ namespace CentrumBiblioteket.Data
         public DbSet<BookCopy> BookCopies { get; set; }
         public DbSet<BookLoan> BookLoans { get; set; }
         public DbSet<LibraryCard> LibraryCards { get; set; }
-        public DbSet<OverdueBookLoan> OverdueBookLoans { get; set; }
+
 
 
 

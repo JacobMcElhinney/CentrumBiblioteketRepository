@@ -10,23 +10,26 @@ using CentrumBiblioteket.Models;
 
 namespace MVCFunctionality.Controllers
 {
-    public class BookLoansOverdueController : Controller
+    public class BookLoansController : Controller
     {
         private readonly CentrumBiblioteketDbContext _context;
 
-        public BookLoansOverdueController(CentrumBiblioteketDbContext context)
+        public BookLoansController(CentrumBiblioteketDbContext context)
         {
             _context = context;
         }
 
-        // GET: BookLoansOverdue
+        // GET: BookLoans
         public async Task<IActionResult> Index()
         {
-            var centrumBiblioteketDbContext = _context.BookLoans.Include(b => b.BookCopy).Include(b => b.LibraryCard);
+            var centrumBiblioteketDbContext = _context.BookLoans
+                .Include(b => b.BookCopy)
+                .Include(b => b.BookEdition)
+                .Include(b => b.LibraryCard);
             return View(await centrumBiblioteketDbContext.ToListAsync());
         }
 
-        // GET: BookLoansOverdue/Details/5
+        // GET: BookLoans/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,6 +39,7 @@ namespace MVCFunctionality.Controllers
 
             var bookLoan = await _context.BookLoans
                 .Include(b => b.BookCopy)
+                .Include(b => b.BookEdition)
                 .Include(b => b.LibraryCard)
                 .FirstOrDefaultAsync(m => m.BookLoanId == id);
             if (bookLoan == null)
@@ -46,20 +50,21 @@ namespace MVCFunctionality.Controllers
             return View(bookLoan);
         }
 
-        // GET: BookLoansOverdue/Create
+        // GET: BookLoans/Create
         public IActionResult Create()
         {
             ViewData["BookCopyId"] = new SelectList(_context.BookCopies, "BookCopyId", "Available");
+            ViewData["BookEditionId"] = new SelectList(_context.BookEditions, "BookEditionId", "BookTitle");
             ViewData["LibraryCardId"] = new SelectList(_context.LibraryCards, "LibraryCardId", "FirstName");
             return View();
         }
 
-        // POST: BookLoansOverdue/Create
+        // POST: BookLoans/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BookLoanId,LibraryCardId,BookCopyId,LoanDate,ReturnDate")] BookLoan bookLoan)
+        public async Task<IActionResult> Create([Bind("BookLoanId,LibraryCardId,BookEditionId,BookCopyId,LoanDate,ReturnDate")] BookLoan bookLoan)
         {
             if (ModelState.IsValid)
             {
@@ -68,11 +73,12 @@ namespace MVCFunctionality.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["BookCopyId"] = new SelectList(_context.BookCopies, "BookCopyId", "Available", bookLoan.BookCopyId);
+            ViewData["BookEditionId"] = new SelectList(_context.BookEditions, "BookEditionId", "BookTitle", bookLoan.BookEditionId);
             ViewData["LibraryCardId"] = new SelectList(_context.LibraryCards, "LibraryCardId", "FirstName", bookLoan.LibraryCardId);
             return View(bookLoan);
         }
 
-        // GET: BookLoansOverdue/Edit/5
+        // GET: BookLoans/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,16 +92,17 @@ namespace MVCFunctionality.Controllers
                 return NotFound();
             }
             ViewData["BookCopyId"] = new SelectList(_context.BookCopies, "BookCopyId", "Available", bookLoan.BookCopyId);
+            ViewData["BookEditionId"] = new SelectList(_context.BookEditions, "BookEditionId", "BookTitle", bookLoan.BookEditionId);
             ViewData["LibraryCardId"] = new SelectList(_context.LibraryCards, "LibraryCardId", "FirstName", bookLoan.LibraryCardId);
             return View(bookLoan);
         }
 
-        // POST: BookLoansOverdue/Edit/5
+        // POST: BookLoans/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BookLoanId,LibraryCardId,BookCopyId,LoanDate,ReturnDate")] BookLoan bookLoan)
+        public async Task<IActionResult> Edit(int id, [Bind("BookLoanId,LibraryCardId,BookEditionId,BookCopyId,LoanDate,ReturnDate")] BookLoan bookLoan)
         {
             if (id != bookLoan.BookLoanId)
             {
@@ -123,11 +130,12 @@ namespace MVCFunctionality.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["BookCopyId"] = new SelectList(_context.BookCopies, "BookCopyId", "Available", bookLoan.BookCopyId);
+            ViewData["BookEditionId"] = new SelectList(_context.BookEditions, "BookEditionId", "BookTitle", bookLoan.BookEditionId);
             ViewData["LibraryCardId"] = new SelectList(_context.LibraryCards, "LibraryCardId", "FirstName", bookLoan.LibraryCardId);
             return View(bookLoan);
         }
 
-        // GET: BookLoansOverdue/Delete/5
+        // GET: BookLoans/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,6 +145,7 @@ namespace MVCFunctionality.Controllers
 
             var bookLoan = await _context.BookLoans
                 .Include(b => b.BookCopy)
+                .Include(b => b.BookEdition)
                 .Include(b => b.LibraryCard)
                 .FirstOrDefaultAsync(m => m.BookLoanId == id);
             if (bookLoan == null)
@@ -147,7 +156,7 @@ namespace MVCFunctionality.Controllers
             return View(bookLoan);
         }
 
-        // POST: BookLoansOverdue/Delete/5
+        // POST: BookLoans/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -16,6 +16,9 @@
                 @Html.DisplayNameFor(model => model.LibraryCard)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.BookEdition.BookTitle)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.BookCopy)
             </th>
             <th>
@@ -32,6 +35,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.LibraryCard.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookEdition.BookTitle)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BookCopy.Available)
