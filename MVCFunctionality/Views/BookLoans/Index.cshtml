@@ -4,22 +4,28 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Overdue Bookloans</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <!-- <a asp-action="Create">Create New</a> -->
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.LibraryCard)
+                @Html.DisplayNameFor(model => model.BookLoanId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BookEdition.BookTitle)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BookCopy)
+                @Html.DisplayNameFor(model => model.LibraryCard.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LibraryCard.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LibraryCard.PhoneNumber)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.LoanDate)
@@ -34,10 +40,19 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.LibraryCard.FirstName)
+                @Html.DisplayFor(modelItem => item.BookLoanId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BookEdition.BookTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LibraryCard.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LibraryCard.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LibraryCard.PhoneNumber)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BookCopy.Available)
@@ -49,9 +64,11 @@
                 @Html.DisplayFor(modelItem => item.ReturnDate)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.BookLoanId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.BookLoanId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.BookLoanId">Delete</a>
+                    <!--
+                        <a asp-action="Edit" asp-route-id="@item.BookLoanId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.BookLoanId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.BookLoanId">Delete</a>
+                    -->
             </td>
         </tr>
 }

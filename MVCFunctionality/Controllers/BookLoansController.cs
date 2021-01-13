@@ -22,7 +22,9 @@ namespace MVCFunctionality.Controllers
         // GET: BookLoans
         public async Task<IActionResult> Index()
         {
-            var centrumBiblioteketDbContext = _context.BookLoans
+           
+
+            var centrumBiblioteketDbContext = _context.BookLoans.Where(bl => bl.LoanDate.AddDays(30) < DateTime.Now)
                 .Include(b => b.BookCopy)
                 .Include(b => b.BookEdition)
                 .Include(b => b.LibraryCard);
