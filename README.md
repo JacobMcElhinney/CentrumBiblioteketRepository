@@ -13,15 +13,23 @@ You can also access it by navigating to /Assets/Documentation/Dokumentation.pdf.
 The following action method was defined and implemented to provide the desired functionality.
 The codeblock is located in MVCFuntionality project Controllers/BookLoansOverdue.cs file on row 22.
 
-        // GET: BookLoansOverdue
+       // GET: BookLoansOverdue
         public async Task<IActionResult> Index()
         {
-            /*BookLoans are Overdue +30 days past LoanDate. The 'Where(Expression)' 
-              filters out BookLoans that are not overdue as of DateTime.Now. */
+            /*BookLoans are Overdue +30 days past LoanDate. The 'Where(Expression)' filters out BookLoans that are not overdue as of 'DateTime.Now. 
+             Related data is then included using LINQ: '.ThenInclude() method. This is possible thanks to the navigation property added in the BookCopy 
+            class/model - see futher comments in said class */
             var centrumBiblioteketDbContext = _context.BookLoans.Where(bl => bl.LoanDate.AddDays(30) < DateTime.Now)
                 .Include(b => b.BookCopy)
                 .ThenInclude(b => b.BookEdition)
                 .Include(b => b.LibraryCard);
+
+            //Validates the modelstate to confirm if data binding was successful. Returns error message if values failed to bind to the model.
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Informationen gick ej att hämta. Vänligen kontakta administratör/it-ansvarig");
+            }
+
             return View(await centrumBiblioteketDbContext.ToListAsync());
         }
         
@@ -42,9 +50,23 @@ In the index.cshtml view file The scaffolded razor html helpers then retrieve th
                     @Html.DisplayFor(modelItem => item.BookCopy.BookEdition.BookTitle)
                 </td>
 
-The above code is an excerpt from row 42 in the above mentioned view file. The HTTP responce or view rendered to the user looks like this:
+The above code is an excerpt from row 43 in the above mentioned view file. The HTTP responce or view rendered to the user looks like this:
 
 ![Endresult example image](Assets/Images/OverdueBookLoans.png)
+
+IF the values included from the database fail to bind to the model passed to the view this is handled by the validation added on row 33 in the BookLoansOverduecontroller.
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Informationen gick ej att hämta. Vänligen kontakta administratör/it-ansvarig");
+            }
+
+Although no user input is accepted validation is necessary as there is a risk the application fails to connect to the database (erronous connectionString) or potential issues with the data in a preexisting database.
+ 
+If the modelState is not valid the custom error message (string argument in the 'BadRequest' method) will be returned to the user who made the request:
+ 
+ ![BadRequest](Assets/Images/BadRequest.png)
+ 
  
 For futher questions and product specific details please review the documentation included in Root/Assets/Documentation/Dokumentation.pdf
 
