@@ -13,9 +13,10 @@ namespace CentrumBiblioteket.Models
 
         public int BookCopyId { get; set; }
 
+        //Added attributes for input validation. 
         [Required]
-        //[RegularExpression(@"[a-z]{2,}", ErrorMessage = "Please input {yes} or {no}.")]
-        //[StringLength(3, ErrorMessage = "Please input {yes} or {no}.", MinimumLength = 2)]
+        [RegularExpression(@"[a-z]{2,}", ErrorMessage = "Please input {yes} or {no}.")]
+        [StringLength(3, ErrorMessage = "Please input {yes} or {no}.", MinimumLength = 2)]
         public string Available { get; set; }
 
         [Required]

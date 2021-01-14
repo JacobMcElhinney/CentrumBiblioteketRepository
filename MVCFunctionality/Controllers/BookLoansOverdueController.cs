@@ -22,7 +22,9 @@ namespace MVCFunctionality.Controllers
         // GET: BookLoansOverdue
         public async Task<IActionResult> Index()
         {
-            //BookLoans are Overdue +30 days past LoanDate. The 'Where(Expression)' filters out BookLoans that are not overdue as of 'DateTime.Now.
+            /*BookLoans are Overdue +30 days past LoanDate. The 'Where(Expression)' filters out BookLoans that are not overdue as of 'DateTime.Now. 
+             Related data is then included using LINQ: '.ThenInclude() method. This is possible thanks to the navigation property added in the BookCopy 
+            class/model - see futher comments in said class */
             var centrumBiblioteketDbContext = _context.BookLoans.Where(bl => bl.LoanDate.AddDays(30) < DateTime.Now)
                 .Include(b => b.BookCopy)
                 .ThenInclude(b => b.BookEdition)
