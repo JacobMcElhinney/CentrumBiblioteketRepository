@@ -6,6 +6,7 @@ Wepp Application for managing book loans
 This document contains a detailed description of the business logic in the newly added function.
 For information regarding deployment, testing and futher technical or productrelated information please review 
 the file titled "Dokumentation.pdf" in the zipped repository uploaded on "Google Classroom".
+You can also access it by navigating to /Assets/Documentation/Dokumentation.pdf.
 
 ## New Function - GET: BookLoansOverdue
 
