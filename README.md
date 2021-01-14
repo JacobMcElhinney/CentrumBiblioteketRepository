@@ -43,7 +43,7 @@ In the index.cshtml view file The scaffolded razor html helpers then retrieve th
 
 The above code is an excerpt from row 42 in the above mentioned view file. The HTTP responce or view rendered to the user looks like this:
 
-![Endresult example image](Assets/Images/OverdueBookLoans.png.jpg)
+![Endresult example image](Assets/Images/OverdueBookLoans.png)
  
 For futher questions and product specific details please review the documentation included in Root/Assets/Documentation/Dokumentation.pdf
 
