@@ -29,6 +29,13 @@ namespace MVCFunctionality.Controllers
                 .Include(b => b.BookCopy)
                 .ThenInclude(b => b.BookEdition)
                 .Include(b => b.LibraryCard);
+
+            //Validates the modelstate to confirm if data binding was successful. Returns error message if values failed to bind to the model.
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Informationen gick ej att hämta. Vänligen kontakta administratör/it-ansvarig");
+            }
+
             return View(await centrumBiblioteketDbContext.ToListAsync());
         }
 

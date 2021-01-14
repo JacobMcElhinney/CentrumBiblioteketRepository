@@ -29,14 +29,18 @@ namespace CentrumBiblioteket.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Overides default EF defined PK with configured custom composit key on model creating.
             modelBuilder.Entity<BookEdition_Author>()
                 .HasKey(be_a => new { be_a.BookEditionId, be_a.AuthorId });
 
+
+            //Configures Modality, Cardinal relationship and key constraint in relation to BookEdition Entity
             modelBuilder.Entity<BookEdition_Author>()
                 .HasOne(be_a => be_a.BookEdition)
                 .WithMany(be => be.BookEdition_Authors)
                 .HasForeignKey(be_a => be_a.BookEditionId);
 
+            //Configures Modality, Cardinal relationship and key constraint in relation to Author Entity
             modelBuilder.Entity<BookEdition_Author>()
                 .HasOne(be_a => be_a.Author)
                 .WithMany(a => a.BookEdition_Authors)
