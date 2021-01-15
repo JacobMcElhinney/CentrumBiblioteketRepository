@@ -13,7 +13,7 @@ You can also access it by navigating to /Assets/Documentation/Dokumentation.pdf.
 The following action method was defined and implemented to provide the desired functionality.
 The codeblock is located in MVCFuntionality project Controllers/BookLoansOverdue.cs file on row 22.
 
-´´´Csharp
+```Csharp
        // GET: BookLoansOverdue
         public async Task<IActionResult> Index()
         {
@@ -32,9 +32,9 @@ The codeblock is located in MVCFuntionality project Controllers/BookLoansOverdue
             }
 
             return View(await centrumBiblioteketDbContext.ToListAsync());
-        }
-        
----
+        }  
+```
+
 Since the controller uses the BookLoans table in the database there is no need to store Book loans that are overdue in a separate table. Instead the HTTP request is configured in the pipeline resulting in a filtered respone which returns only the objects that satisfy the condition specified in the WHERE clause. This is achieved through the following LINQ expression:
 
                 .Where(bl => bl.LoanDate.AddDays(30) < DateTime.Now) 
