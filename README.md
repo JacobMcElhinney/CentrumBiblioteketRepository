@@ -76,7 +76,7 @@ Although no user input is accepted validation is necessary as there is a risk th
  
 If the modelState is not valid the custom error message (string argument in the 'BadRequest' method) will be returned to the user who made the request:
  
- ![BadRequest](./Assets/Images/BadRequest.png)
+ ![BadRequest](Assets/Images/BadRequest.png)
  
  
 For futher questions and product specific details please review the documentation included in Root/Assets/Documentation/Dokumentation.pdf
